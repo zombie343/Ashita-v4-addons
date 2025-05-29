@@ -31,6 +31,7 @@ local imgui = require('imgui');
 local settings = require('settings');
 
 local skills = require('skills');
+local isDuplicate = require('packet-dedupe');
 
 --=============================================================================
 -- Addon Variables
@@ -758,6 +759,11 @@ ashita.events.register('packet_in', 'packet_in_cb', function (e)
         [14] = 'Job Ability DNC',
         [15] = 'Job Ability RUN',
     --]]
+
+    if (isDuplicate(e)) then
+        return;
+    end
+
     if e.id == 0x28 then
 
         -- Save a little bit of processing for packets that won't relate to SC..
